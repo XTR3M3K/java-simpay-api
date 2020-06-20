@@ -20,10 +20,10 @@ public class HttpService {
     }
 
     @SneakyThrows
-    public ResponseBody sendPost(String url, Object object) {
+    public Response sendPost(String url, Object object) {
         Request.Builder builder = new Request.Builder();
         RequestBody requestBody = RequestBody.create(MediaType.parse(CONTENT_TYPE_VALUE), gson().toJson(object));
         Request request = builder.url(url).post(requestBody).build();
-        return init().newCall(request).execute().body();
+        return init().newCall(request).execute().networkResponse();
     }
 }
