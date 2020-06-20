@@ -6,7 +6,7 @@ public enum Operator {
     ORANGE(1),
     PLAY(2),
     T_MOBILE(3),
-    PLUS_GSN(4);
+    PLUS_GSM(4);
 
     @Setter
     private int value;
