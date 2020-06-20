@@ -11,11 +11,11 @@ import static pl.simpay.api.utils.ApiConstants.CONTENT_TYPE_VALUE;
 @Data
 public class HttpService {
 
-    private static OkHttpClient init() {
+    private OkHttpClient init() {
         return new OkHttpClient();
     }
 
-    private static Gson gson() {
+    private Gson gson() {
         return new GsonBuilder().setPrettyPrinting().create();
     }
 
