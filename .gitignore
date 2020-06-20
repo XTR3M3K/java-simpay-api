@@ -1,5 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
-.idea
+.idea/*
 .gitignore
 .idea/.gitignore
 .idea/java-simpay-api.iml
