@@ -3,7 +3,13 @@ package pl.simpay.api.payments;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import pl.simpay.api.model.db.*;
+import pl.simpay.api.model.db.requests.DbGenerateRequest;
+import pl.simpay.api.model.db.requests.DbServicesListRequest;
+import pl.simpay.api.model.db.requests.DbTransactionRequest;
+import pl.simpay.api.model.db.responses.DbGenerateResponse;
+import pl.simpay.api.model.db.responses.DbServicesListResponse;
 import pl.simpay.api.model.generic.APIResponse;
+import pl.simpay.api.model.generic.ParametrizedRequest;
 import pl.simpay.api.utils.Hashing;
 import pl.simpay.api.utils.HttpService;
 
@@ -17,6 +23,7 @@ public class DirectBilling {
     private static final String SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
 
     private static final TypeToken<APIResponse<DbTransaction>> DB_TRANSACTION_RESPONSE = new TypeToken<>() {};
+    private static final TypeToken<APIResponse<DbServicesListResponse>> DB_SERVICES_LIST_RESPONSE = new TypeToken<>() {};
 
     private String apiKey;
     private String secret;
@@ -61,11 +68,11 @@ public class DirectBilling {
     }
 
     // https://docs.simpay.pl/?php#pobieranie-danych-o-transakcji
-    public DbTransaction getTransaction(DbTransactionRequest request) {
+    public APIResponse<DbTransaction> getTransaction(DbTransactionRequest request) {
         if (request.getKey() == null) request.setKey(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
 
-        return service.sendPost(STATUS_API_URL, request, DB_TRANSACTION_RESPONSE.getType());
+        return service.sendPost(STATUS_API_URL, new ParametrizedRequest<>(request), DB_TRANSACTION_RESPONSE.getType());
     }
 
     // https://docs.simpay.pl/?php#pobieranie-listy-uslug-dcb
@@ -73,6 +80,6 @@ public class DirectBilling {
         if (request.getApi() == null) request.setApi(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
 
-        return service.sendPost(SERVICES_LIST_URL, request, DB_TRANSACTION_RESPONSE.getType());
+        return service.sendPost(SERVICES_LIST_URL, new ParametrizedRequest<>(request), DB_SERVICES_LIST_RESPONSE.getType());
     }
 }

@@ -1,4 +1,4 @@
-package pl.simpay.api.model.db;
+package pl.simpay.api.model.db.requests;
 
 import lombok.Data;
 import pl.simpay.api.model.Operator;

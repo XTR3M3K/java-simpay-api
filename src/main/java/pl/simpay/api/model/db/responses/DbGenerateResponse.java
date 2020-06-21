@@ -1,4 +1,4 @@
-package pl.simpay.api.model.db;
+package pl.simpay.api.model.db.responses;
 
 import lombok.Data;
 
