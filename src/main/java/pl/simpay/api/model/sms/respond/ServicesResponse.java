@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ServicesRespond {
+public class ServicesResponse {
     private String status;
     private List<Service> services;
 }

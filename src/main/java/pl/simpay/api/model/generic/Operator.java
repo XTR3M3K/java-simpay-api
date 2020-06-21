@@ -1,4 +1,4 @@
-package pl.simpay.api.model;
+package pl.simpay.api.model.generic;
 
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package pl.simpay.api.model.db.requests;
 
 import lombok.Data;
-import pl.simpay.api.model.Operator;
+import pl.simpay.api.model.generic.Operator;
 
 @Data
 public class DbGenerateRequest {

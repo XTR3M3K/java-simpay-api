@@ -3,7 +3,7 @@ package pl.simpay.api.model.sms.respond;
 import lombok.Data;
 
 @Data
-public class CodeVerifyRespond {
+public class CodeVerifyResponse {
     private String status;
     private int test;
     private int from;
