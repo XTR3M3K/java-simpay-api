@@ -5,22 +5,23 @@ import lombok.SneakyThrows;
 import okhttp3.Response;
 import pl.simpay.api.exceptions.ServicesNotFoundException;
 import pl.simpay.api.exceptions.TransactionNotFoundException;
-import pl.simpay.api.model.Parameters;
 import pl.simpay.api.model.Respond;
-import pl.simpay.api.model.services.Params;
-import pl.simpay.api.model.services.Services;
+import pl.simpay.api.model.sms.ServiceList;
+import pl.simpay.api.model.sms.Services;
 import pl.simpay.api.utils.HttpService;
 
 import static pl.simpay.api.utils.ApiConstants.*;
 
 @AllArgsConstructor
 public class Sms {
+    private static final String SMS_API_URL = "https://simpay.pl/api/status";
+    private static final String SERVICE_LIST_URL = "https://simpay.pl/api/get_services";
 
     private final HttpService service;
 
     @SneakyThrows
-    public Respond verifyCode(Parameters parameters) {
-        Response response = service.sendPost(SMS_API_URL, parameters);
+    public Respond verifyCode(pl.simpay.api.model.sms.Params params) {
+        Response response = service.sendPost(SMS_API_URL, params);
         int code = response.code();
 
         response.close();
@@ -34,15 +35,15 @@ public class Sms {
     }
 
     @SneakyThrows
-    public Services getServiceList(Params params) {
+    public Services getServiceList(pl.simpay.api.model.services.Params params) {
         Response response = service.sendPost(SERVICE_LIST_URL, params);
         int code = response.code();
 
         response.close();
         if (code == HTTP_OK_CODE) {
-            Services services = gson.fromJson(response.body().string(), Services.class);
-            if (services.getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
-                return services;
+            ServiceList serviceList = gson.fromJson(response.body().string(), ServiceList.class);
+            if (serviceList.getServices().getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
+                return serviceList.getServices();
             }
         }
         throw new ServicesNotFoundException();

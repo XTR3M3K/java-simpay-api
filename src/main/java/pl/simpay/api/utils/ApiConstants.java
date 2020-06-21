@@ -6,9 +6,6 @@ import com.google.gson.GsonBuilder;
 public class ApiConstants {
     public static final String API_KEY = "x";
     public static final String API_SECRET = "x";
-    //  Kod jednorazowy
-    public static final String SMS_API_URL = "https://simpay.pl/api/status";
-    public static final String SERVICE_LIST_URL = "https://simpay.pl/api/get_services";
 
     public static final String TRANSACTION_NOT_FOUND_MESSAGE = "Transaction Not Found";
     public static final String SERVICES_NOT_FOUND_MESSAGE = "Services not found for passed params";
