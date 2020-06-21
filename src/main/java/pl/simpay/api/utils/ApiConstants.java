@@ -1,11 +1,14 @@
 package pl.simpay.api.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class ApiConstants {
     public static final String API_KEY = "x";
     public static final String API_SECRET = "x";
-
     //  Kod jednorazowy
     public static final String SMS_API_URL = "https://simpay.pl/api/status";
+    public static final String SERVICE_LIST_URL = "https://simpay.pl/api/get_services";
 
     // Direct Billing
     public static final String DB_KEY = "x";
@@ -16,6 +19,7 @@ public class ApiConstants {
     public static final String DB_SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
 
     public static final String TRANSACTION_NOT_FOUND_MESSAGE = "Transaction Not Found";
+    public static final String SERVICES_NOT_FOUND_MESSAGE = "Services not found for passed params";
     public static final String SIGN = "sign";
     public static final String CONTROL = "control";
     public static final String SERVICE_ID = "serviceId";
@@ -43,5 +47,10 @@ public class ApiConstants {
     public static final String PAYMENT_NET_VALUE_GROSS = "valuenet_gross";
     public static final String PAYMENT_PARTNER_VALUE = "valuepartner";
     public static final String PAYMENT_SENDER_NUMBER = "number_from";
+    public static final String RESPONSE_STATUS_OK = "OK";
     public static final int FIRST_INDEX = 0;
+    public static final int HTTP_OK_CODE = 200;
+
+
+    public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 }
