@@ -18,8 +18,8 @@ public class Sms {
     private static final String VERIFY_CODE_URL = "https://simpay.pl/api/status";
     private static final String SERVICE_LIST_URL = "https://simpay.pl/api/get_services";
 
-    private static final TypeToken<APIResponse<CodeVerifyResponse>> SERVICE_LIST_RESPONSE = new TypeToken<>() {};
-    private static final TypeToken<APIResponse<ServicesResponse>> VERIFY_CODE_RESPONSE = new TypeToken<>() {};
+    private static final TypeToken<APIResponse<CodeVerifyResponse>> SERVICE_LIST_RESPONSE = new TypeToken<APIResponse<CodeVerifyResponse>>() {};
+    private static final TypeToken<APIResponse<ServicesResponse>> VERIFY_CODE_RESPONSE = new TypeToken<APIResponse<ServicesResponse>>() {};
 
     private String apiKey;
     private String secret;

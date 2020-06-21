@@ -42,7 +42,7 @@ public class SmsXml {
         codes.put("92555", 12.5);
     }
 
-    private static final TypeToken<APIResponse<IPResponse>> IP_RESPONSE = new TypeToken<>() {};
+    private static final TypeToken<APIResponse<IPResponse>> IP_RESPONSE = new TypeToken<APIResponse<IPResponse>>() {};
 
     private String apiKey;
 

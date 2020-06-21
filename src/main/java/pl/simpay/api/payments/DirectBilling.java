@@ -25,11 +25,11 @@ public class DirectBilling {
     private static final String SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
     private static final String GET_IP_URL = "https://simpay.pl/api/get_ip";
 
-    private static final TypeToken<APIResponse<IPResponse>> IP_RESPONSE = new TypeToken<>() {};
-    private static final TypeToken<APIResponse<DbTransaction>> DB_TRANSACTION_RESPONSE = new TypeToken<>() {};
-    private static final TypeToken<APIResponse<DbServicesListResponse>> DB_SERVICES_LIST_RESPONSE = new TypeToken<>() {};
-    private static final TypeToken<APIResponse<List<DbTransactionLimit>>> DB_TRANSACTION_LIMITS_RESPONSE = new TypeToken<>() {};
-    private static final TypeToken<APIResponse<List<DbCommission>>> DB_SERVICE_COMMISSION_RESPONSE = new TypeToken<>() {};
+    private static final TypeToken<APIResponse<IPResponse>> IP_RESPONSE = new TypeToken<APIResponse<IPResponse>>() {};
+    private static final TypeToken<APIResponse<DbTransaction>> DB_TRANSACTION_RESPONSE = new TypeToken<APIResponse<DbTransaction>>() {};
+    private static final TypeToken<APIResponse<DbServicesListResponse>> DB_SERVICES_LIST_RESPONSE = new TypeToken<APIResponse<DbServicesListResponse>>() {};
+    private static final TypeToken<APIResponse<List<DbTransactionLimit>>> DB_TRANSACTION_LIMITS_RESPONSE = new TypeToken<APIResponse<List<DbTransactionLimit>>>() {};
+    private static final TypeToken<APIResponse<List<DbCommission>>> DB_SERVICE_COMMISSION_RESPONSE = new TypeToken<APIResponse<List<DbCommission>>>() {};
 
     private String apiKey;
     private String secret;
