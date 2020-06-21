@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import okhttp3.Response;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class APIException extends RuntimeException {
     private final Response response;
 }
