@@ -7,12 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@JsonPropertyOrder({
-        "respond",
-        "error"
-})
 public class ServiceList {
-    @JsonProperty("respond")
     private Services services;
     private List<Object> error;
 }
