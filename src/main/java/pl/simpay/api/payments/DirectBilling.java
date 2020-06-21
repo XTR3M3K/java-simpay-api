@@ -3,10 +3,19 @@ package pl.simpay.api.payments;
 import lombok.Data;
 import pl.simpay.api.model.db.DbGenerateRequest;
 import pl.simpay.api.model.db.DbGenerateResponse;
+import pl.simpay.api.utils.ApiConstants;
 import pl.simpay.api.utils.Hashing;
+import pl.simpay.api.utils.HttpService;
 
 @Data
 public class DirectBilling {
+    private static final HttpService service = new HttpService();
+    private static final String API_URL = "https://simpay.pl/db/api";
+    private static final String STATUS_API_URL = "https://simpay.pl/api/db_status";
+    private static final String SERVICES_LIST_URL = "https://simpay.pl/api/get_services_db";
+    private static final String MAX_TRANSACTION_VALUE_URL = "https://simpay.pl/api/db_hosts";
+    private static final String SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
+
     private String apiKey;
     private boolean debugMode;
     private int serviceId;
@@ -37,6 +46,6 @@ public class DirectBilling {
 
         request.setSign(Hashing.sha256hex(this.serviceId + "" + amount + "" + request.getControl() + "" + this.apiKey));
 
-
+        return service.sendPost(API_URL, request, DbGenerateResponse.class);
     }
 }

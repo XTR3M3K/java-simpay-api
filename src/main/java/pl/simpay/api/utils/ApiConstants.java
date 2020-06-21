@@ -10,14 +10,6 @@ public class ApiConstants {
     public static final String SMS_API_URL = "https://simpay.pl/api/status";
     public static final String SERVICE_LIST_URL = "https://simpay.pl/api/get_services";
 
-    // Direct Billing
-    public static final String DB_KEY = "x";
-    public static final String DB_API_URL = "https://simpay.pl/db/api";
-    public static final String DB_STATUS_API_URL = "https://simpay.pl/api/db_status";
-    public static final String DB_SERVICES_LIST_URL = "https://simpay.pl/api/get_services_db";
-    public static final String DB_MAX_TRANSACTION_VALUE_URL = "https://simpay.pl/api/db_hosts";
-    public static final String DB_SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
-
     public static final String TRANSACTION_NOT_FOUND_MESSAGE = "Transaction Not Found";
     public static final String SERVICES_NOT_FOUND_MESSAGE = "Services not found for passed params";
     public static final String SIGN = "sign";

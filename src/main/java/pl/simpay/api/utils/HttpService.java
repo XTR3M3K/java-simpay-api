@@ -10,7 +10,6 @@ import static pl.simpay.api.utils.ApiConstants.CONTENT_TYPE_VALUE;
 
 @Data
 public class HttpService {
-
     private OkHttpClient init() {
         return new OkHttpClient();
     }
@@ -19,11 +18,17 @@ public class HttpService {
         return new GsonBuilder().setPrettyPrinting().create();
     }
 
-    @SneakyThrows
-    public Response sendPost(String url, Object object) {
+    @SneakyThrows public Response sendPost(String url, Object object) {
         Request.Builder builder = new Request.Builder();
         RequestBody requestBody = RequestBody.create(MediaType.parse(CONTENT_TYPE_VALUE), gson().toJson(object));
         Request request = builder.url(url).post(requestBody).build();
         return init().newCall(request).execute().networkResponse();
+    }
+
+    @SneakyThrows public <T> T sendPost(String url, Object object, Class<T> clazz) {
+        Request.Builder builder = new Request.Builder();
+        RequestBody requestBody = RequestBody.create(MediaType.parse(CONTENT_TYPE_VALUE), gson().toJson(object));
+        Request request = builder.url(url).post(requestBody).build();
+        return gson().fromJson(init().newCall(request).execute().networkResponse().body().string(), clazz);
     }
 }
