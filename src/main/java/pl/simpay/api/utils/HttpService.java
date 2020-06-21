@@ -7,7 +7,10 @@ import lombok.SneakyThrows;
 import okhttp3.*;
 import pl.simpay.api.exceptions.APIException;
 
+import java.lang.reflect.Type;
+
 import static pl.simpay.api.utils.ApiConstants.CONTENT_TYPE_VALUE;
+import static pl.simpay.api.utils.ApiConstants.HTTP_OK_CODE;
 
 @Data
 public class HttpService {
@@ -23,9 +26,9 @@ public class HttpService {
         Request.Builder builder = new Request.Builder();
         RequestBody requestBody = RequestBody.create(MediaType.parse(CONTENT_TYPE_VALUE), gson().toJson(object));
         Request request = builder.url(url).post(requestBody).build();
-        
+
         try (Response response = init().newCall(request).execute().networkResponse()) {
-            if (response.code() != ApiConstants.HTTP_OK_CODE) {
+            if (response.code() != HTTP_OK_CODE) {
                 throw new APIException(response);
             }
 
@@ -35,5 +38,9 @@ public class HttpService {
 
     @SneakyThrows public <T> T sendPost(String url, Object object, Class<T> clazz) {
         return gson().fromJson(this.sendPost(url, object).body().string(), clazz);
+    }
+
+    @SneakyThrows public <T> T sendPost(String url, Object object, Type type) {
+        return gson().fromJson(this.sendPost(url, object).body().string(), type);
     }
 }

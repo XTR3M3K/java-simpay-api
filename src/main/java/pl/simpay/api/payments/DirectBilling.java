@@ -1,8 +1,9 @@
 package pl.simpay.api.payments;
 
+import com.google.gson.reflect.TypeToken;
 import lombok.Data;
-import pl.simpay.api.model.db.DbGenerateRequest;
-import pl.simpay.api.model.db.DbGenerateResponse;
+import pl.simpay.api.model.db.*;
+import pl.simpay.api.model.generic.APIResponse;
 import pl.simpay.api.utils.Hashing;
 import pl.simpay.api.utils.HttpService;
 
@@ -15,9 +16,19 @@ public class DirectBilling {
     private static final String MAX_TRANSACTION_VALUE_URL = "https://simpay.pl/api/db_hosts";
     private static final String SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
 
+    private static final TypeToken<APIResponse<DbTransaction>> DB_TRANSACTION_RESPONSE = new TypeToken<>() {};
+
     private String apiKey;
+    private String secret;
     private boolean debugMode;
     private int serviceId;
+
+    public DirectBilling(String apiKey, String secret, boolean debugMode, int serviceId) {
+        this.apiKey = apiKey;
+        this.secret = secret;
+        this.debugMode = debugMode;
+        this.serviceId = serviceId;
+    }
 
     public DirectBilling(String apiKey, boolean debugMode, int serviceId) {
         this.apiKey = apiKey;
@@ -34,6 +45,7 @@ public class DirectBilling {
         this(apiKey, false);
     }
 
+    // https://docs.simpay.pl/?php#generowanie-transakcji
     public DbGenerateResponse generateTransaction(DbGenerateRequest request) {
         if (request.getServiceId() == -1) request.setServiceId(serviceId);
 
@@ -46,5 +58,21 @@ public class DirectBilling {
         request.setSign(Hashing.sha256hex(this.serviceId + "" + amount + "" + request.getControl() + "" + this.apiKey));
 
         return service.sendPost(API_URL, request, DbGenerateResponse.class);
+    }
+
+    // https://docs.simpay.pl/?php#pobieranie-danych-o-transakcji
+    public DbTransaction getTransaction(DbTransactionRequest request) {
+        if (request.getKey() == null) request.setKey(apiKey);
+        if (request.getSecret() == null) request.setSecret(secret);
+
+        return service.sendPost(STATUS_API_URL, request, DB_TRANSACTION_RESPONSE.getType());
+    }
+
+    // https://docs.simpay.pl/?php#pobieranie-listy-uslug-dcb
+    public DbTransaction getServices(DbServicesListRequest request) {
+        if (request.getApi() == null) request.setApi(apiKey);
+        if (request.getSecret() == null) request.setSecret(secret);
+
+        return service.sendPost(SERVICES_LIST_URL, request, DB_TRANSACTION_RESPONSE.getType());
     }
 }

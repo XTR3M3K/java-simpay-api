@@ -1,9 +1,9 @@
-package pl.simpay.api.model;
+package pl.simpay.api.model.db;
 
 import lombok.Data;
 
 @Data
-public class DbStatusRespond {
+public class DbTransaction {
     private int id;
     private double valuenet;
     private double valuenet_gross;
