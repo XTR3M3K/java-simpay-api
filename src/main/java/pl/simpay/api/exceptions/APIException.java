@@ -7,5 +7,5 @@ import okhttp3.Response;
 @AllArgsConstructor
 @Getter
 public class APIException extends RuntimeException {
-    private Response response;
+    private final Response response;
 }

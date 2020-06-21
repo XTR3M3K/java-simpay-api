@@ -22,14 +22,11 @@ public class Sms {
     @SneakyThrows
     public Respond verifyCode(pl.simpay.api.model.sms.Params params) {
         Response response = service.sendPost(SMS_API_URL, params);
-        int code = response.code();
 
         response.close();
-        if (code == HTTP_OK_CODE) {
-            Respond respond = gson.fromJson(response.body().string(), Respond.class);
-            if (respond.getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
-                return respond;
-            }
+        Respond respond = gson.fromJson(response.body().string(), Respond.class);
+        if (respond.getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
+            return respond;
         }
         throw new TransactionNotFoundException(TRANSACTION_NOT_FOUND_MESSAGE);
     }
@@ -37,14 +34,11 @@ public class Sms {
     @SneakyThrows
     public Services getServiceList(pl.simpay.api.model.services.Params params) {
         Response response = service.sendPost(SERVICE_LIST_URL, params);
-        int code = response.code();
 
         response.close();
-        if (code == HTTP_OK_CODE) {
-            ServiceList serviceList = gson.fromJson(response.body().string(), ServiceList.class);
-            if (serviceList.getServices().getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
-                return serviceList.getServices();
-            }
+        ServiceList serviceList = gson.fromJson(response.body().string(), ServiceList.class);
+        if (serviceList.getServices().getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
+            return serviceList.getServices();
         }
         throw new ServicesNotFoundException();
     }
