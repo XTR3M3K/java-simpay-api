@@ -1,4 +1,4 @@
-package pl.simpay.api.model.sms;
+package pl.simpay.api.model.sms.respond;
 
 import lombok.Data;
 

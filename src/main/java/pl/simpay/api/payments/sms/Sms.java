@@ -1,46 +1,35 @@
 package pl.simpay.api.payments.sms;
 
+import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.SneakyThrows;
-import okhttp3.Response;
-import pl.simpay.api.exceptions.ServicesNotFoundException;
-import pl.simpay.api.exceptions.TransactionNotFoundException;
-import pl.simpay.api.model.sms.CodeResponse;
-import pl.simpay.api.model.sms.Respond;
-import pl.simpay.api.model.sms.ServiceListResponse;
-import pl.simpay.api.model.sms.Services;
+import pl.simpay.api.model.generic.APIResponse;
+import pl.simpay.api.model.generic.ParametrizedRequest;
+import pl.simpay.api.model.sms.request.ServiceListRequest;
+import pl.simpay.api.model.sms.request.CodeVerifyRequest;
+import pl.simpay.api.model.sms.respond.CodeVerifyRespond;
+import pl.simpay.api.model.sms.respond.ServicesRespond;
 import pl.simpay.api.utils.HttpService;
-
-import static pl.simpay.api.utils.ApiConstants.*;
 
 @AllArgsConstructor
 public class Sms {
-    private static final String SMS_API_URL = "https://simpay.pl/api/status";
+    private static final String VERIFY_CODE_URL = "https://simpay.pl/api/status";
     private static final String SERVICE_LIST_URL = "https://simpay.pl/api/get_services";
+    private static final TypeToken<APIResponse<CodeVerifyRespond>> SERVICE_LIST_RESPONSE = new TypeToken<>() {
+    };
+    private static final TypeToken<APIResponse<ServicesRespond>> VERIFY_CODE_RESPONSE = new TypeToken<>() {
+    };
 
     private final HttpService service;
 
     @SneakyThrows
-    public Respond verifyCode(pl.simpay.api.model.sms.Params params) {
-        Response response = service.sendPost(SMS_API_URL, params);
-
-        response.close();
-        CodeResponse codeResponse = gson.fromJson(response.body().string(), CodeResponse.class);
-        if (codeResponse.getRespond().getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
-            return codeResponse.getRespond();
-        }
-        throw new TransactionNotFoundException(TRANSACTION_NOT_FOUND_MESSAGE);
+    public CodeVerifyRespond verifyCode(@NonNull CodeVerifyRequest codeVerifyRequest) {
+        return service.sendPost(VERIFY_CODE_URL, new ParametrizedRequest<>(codeVerifyRequest), VERIFY_CODE_RESPONSE.getType());
     }
 
     @SneakyThrows
-    public Services getServiceList(pl.simpay.api.model.services.Params params) {
-        Response response = service.sendPost(SERVICE_LIST_URL, params);
-
-        response.close();
-        ServiceListResponse serviceListResponse = gson.fromJson(response.body().string(), ServiceListResponse.class);
-        if (serviceListResponse.getServices().getStatus().equalsIgnoreCase(RESPONSE_STATUS_OK)) {
-            return serviceListResponse.getServices();
-        }
-        throw new ServicesNotFoundException();
+    public ServicesRespond getServiceList(@NonNull ServiceListRequest serviceListRequest) {
+        return service.sendPost(SERVICE_LIST_URL, new ParametrizedRequest<>(serviceListRequest), SERVICE_LIST_RESPONSE.getType());
     }
 }

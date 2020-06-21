@@ -1,9 +1,9 @@
-package pl.simpay.api.model.sms;
+package pl.simpay.api.model.sms.request;
 
 import lombok.Data;
 
 @Data
-public class Params {
+public class CodeVerifyRequest {
     private String key;
     private String secret;
     private String service_id;

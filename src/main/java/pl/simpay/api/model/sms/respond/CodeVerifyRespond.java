@@ -1,9 +1,9 @@
-package pl.simpay.api.model.sms;
+package pl.simpay.api.model.sms.respond;
 
 import lombok.Data;
 
 @Data
-public class Respond {
+public class CodeVerifyRespond {
     private String status;
     private int test;
     private int from;
