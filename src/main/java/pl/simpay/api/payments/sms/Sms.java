@@ -23,13 +23,11 @@ public class Sms {
 
     private final HttpService service;
 
-    @SneakyThrows
-    public CodeVerifyRespond verifyCode(@NonNull CodeVerifyRequest codeVerifyRequest) {
+    @SneakyThrows public CodeVerifyRespond verifyCode(@NonNull CodeVerifyRequest codeVerifyRequest) {
         return service.sendPost(VERIFY_CODE_URL, new ParametrizedRequest<>(codeVerifyRequest), VERIFY_CODE_RESPONSE.getType());
     }
 
-    @SneakyThrows
-    public ServicesRespond getServiceList(@NonNull ServiceListRequest serviceListRequest) {
+    @SneakyThrows public ServicesRespond getServiceList(@NonNull ServiceListRequest serviceListRequest) {
         return service.sendPost(SERVICE_LIST_URL, new ParametrizedRequest<>(serviceListRequest), SERVICE_LIST_RESPONSE.getType());
     }
 }
