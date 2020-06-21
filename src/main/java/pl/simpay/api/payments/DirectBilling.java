@@ -9,6 +9,7 @@ import pl.simpay.api.model.db.responses.DbGenerateResponse;
 import pl.simpay.api.model.db.responses.DbServicesListResponse;
 import pl.simpay.api.model.generic.APIResponse;
 import pl.simpay.api.model.generic.ParametrizedRequest;
+import pl.simpay.api.model.sms.respond.IpRespond;
 import pl.simpay.api.utils.Hashing;
 import pl.simpay.api.utils.HttpService;
 
@@ -22,7 +23,9 @@ public class DirectBilling {
     private static final String SERVICES_LIST_URL = "https://simpay.pl/api/get_services_db";
     private static final String TRANSACTION_LIMITS_URL = "https://simpay.pl/api/db_hosts";
     private static final String SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
+    private static final String GET_IP_URL = "https://simpay.pl/api/get_ip";
 
+    private static final TypeToken<APIResponse<IpRespond>> IP_RESPONSE = new TypeToken<>() {};
     private static final TypeToken<APIResponse<DbTransaction>> DB_TRANSACTION_RESPONSE = new TypeToken<>() {};
     private static final TypeToken<APIResponse<DbServicesListResponse>> DB_SERVICES_LIST_RESPONSE = new TypeToken<>() {};
     private static final TypeToken<APIResponse<List<DbTransactionLimit>>> DB_TRANSACTION_LIMITS_RESPONSE = new TypeToken<>() {};
@@ -100,5 +103,10 @@ public class DirectBilling {
         if (request.getSecret() == null) request.setSecret(secret);
 
         return service.sendPost(SERVICE_COMMISSION_URL, new ParametrizedRequest<>(request), DB_SERVICE_COMMISSION_RESPONSE.getType());
+    }
+
+    private boolean checkIsIpValid(String ip) {
+        IpRespond response = service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
+        return response.getIps().contains(ip);
     }
 }
