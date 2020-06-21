@@ -9,11 +9,11 @@ import pl.simpay.api.exceptions.APIException;
 
 import java.lang.reflect.Type;
 
-import static pl.simpay.api.utils.ApiConstants.CONTENT_TYPE_VALUE;
-import static pl.simpay.api.utils.ApiConstants.HTTP_OK_CODE;
-
 @Data
 public class HttpService {
+    private static final String CONTENT_TYPE_VALUE = "application/json";
+    private static final int HTTP_OK_CODE = 200;
+
     private OkHttpClient init() {
         return new OkHttpClient();
     }

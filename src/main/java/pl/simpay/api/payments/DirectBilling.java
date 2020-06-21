@@ -9,7 +9,7 @@ import pl.simpay.api.model.db.responses.DbGenerateResponse;
 import pl.simpay.api.model.db.responses.DbServicesListResponse;
 import pl.simpay.api.model.generic.APIResponse;
 import pl.simpay.api.model.generic.ParametrizedRequest;
-import pl.simpay.api.model.sms.respond.IpRespond;
+import pl.simpay.api.model.generic.IPResponse;
 import pl.simpay.api.utils.Hashing;
 import pl.simpay.api.utils.HttpService;
 
@@ -25,7 +25,7 @@ public class DirectBilling {
     private static final String SERVICE_COMMISSION_URL = "https://simpay.pl/api/db_hosts_commission";
     private static final String GET_IP_URL = "https://simpay.pl/api/get_ip";
 
-    private static final TypeToken<APIResponse<IpRespond>> IP_RESPONSE = new TypeToken<>() {};
+    private static final TypeToken<APIResponse<IPResponse>> IP_RESPONSE = new TypeToken<>() {};
     private static final TypeToken<APIResponse<DbTransaction>> DB_TRANSACTION_RESPONSE = new TypeToken<>() {};
     private static final TypeToken<APIResponse<DbServicesListResponse>> DB_SERVICES_LIST_RESPONSE = new TypeToken<>() {};
     private static final TypeToken<APIResponse<List<DbTransactionLimit>>> DB_TRANSACTION_LIMITS_RESPONSE = new TypeToken<>() {};
@@ -58,7 +58,7 @@ public class DirectBilling {
         this(apiKey, false);
     }
 
-    // https://docs.simpay.pl/?php#generowanie-transakcji
+    // https://docs.simpay.pl/#generowanie-transakcji
     public DbGenerateResponse generateTransaction(@NonNull DbGenerateRequest request) {
         if (request.getServiceId() == -1) request.setServiceId(serviceId);
 
@@ -73,7 +73,7 @@ public class DirectBilling {
         return service.sendPost(API_URL, request, DbGenerateResponse.class);
     }
 
-    // https://docs.simpay.pl/?php#pobieranie-danych-o-transakcji
+    // https://docs.simpay.pl/#pobieranie-danych-o-transakcji
     public APIResponse<DbTransaction> getTransaction(@NonNull DbTransactionRequest request) {
         if (request.getKey() == null) request.setKey(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
@@ -81,7 +81,7 @@ public class DirectBilling {
         return service.sendPost(TRANSACTION_STATUS_URL, new ParametrizedRequest<>(request), DB_TRANSACTION_RESPONSE.getType());
     }
 
-    // https://docs.simpay.pl/?php#pobieranie-listy-uslug-dcb
+    // https://docs.simpay.pl/#pobieranie-listy-uslug-dcb
     public APIResponse<DbServicesListResponse> getServices(@NonNull DbServicesListRequest request) {
         if (request.getApi() == null) request.setApi(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
@@ -89,7 +89,7 @@ public class DirectBilling {
         return service.sendPost(SERVICES_LIST_URL, new ParametrizedRequest<>(request), DB_SERVICES_LIST_RESPONSE.getType());
     }
 
-    // https://docs.simpay.pl/?php#pobieranie-maksymalnych-kwot-transakcji
+    // https://docs.simpay.pl/#pobieranie-maksymalnych-kwot-transakcji
     public APIResponse<List<DbTransactionLimit>> getTransactionLimits(@NonNull DbTransactionLimitsRequest request) {
         if (request.getApi() == null) request.setApi(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
@@ -97,7 +97,7 @@ public class DirectBilling {
         return service.sendPost(TRANSACTION_LIMITS_URL, new ParametrizedRequest<>(request), DB_TRANSACTION_LIMITS_RESPONSE.getType());
     }
 
-    // https://docs.simpay.pl/?php#pobieranie-prowizji-dla-uslugi
+    // https://docs.simpay.pl/#pobieranie-prowizji-dla-uslugi
     public APIResponse<List<DbCommission>> getServiceCommission(@NonNull DbServiceCommissionRequest request) {
         if (request.getApi() == null) request.setApi(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
@@ -105,9 +105,13 @@ public class DirectBilling {
         return service.sendPost(SERVICE_COMMISSION_URL, new ParametrizedRequest<>(request), DB_SERVICE_COMMISSION_RESPONSE.getType());
     }
 
-    // https://docs.simpay.pl/?php#lista-ip-serwerow-simpay
-    private boolean checkIsIpValid(String ip) {
-        IpRespond response = service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
-        return response.getIps().contains(ip);
+    // https://docs.simpay.pl/#lista-ip-serwerow-simpay
+    public boolean getServersIp(String ip) {
+        return service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
+    }
+
+    // https://docs.simpay.pl/#odbieranie-transakcji
+    public String sign(int id, String status, String valuenet, String valuepartner, String control) {
+        return Hashing.sha256hex(id + status + valuenet + valuepartner + control + apiKey);
     }
 }

@@ -20,12 +20,12 @@ public class Sms {
     private static final TypeToken<APIResponse<CodeVerifyRespond>> SERVICE_LIST_RESPONSE = new TypeToken<>() {};
     private static final TypeToken<APIResponse<ServicesRespond>> VERIFY_CODE_RESPONSE = new TypeToken<>() {};
 
-    // https://docs.simpay.pl/?php#weryfikacja-kodu
+    // https://docs.simpay.pl/#weryfikacja-kodu
     @SneakyThrows public CodeVerifyRespond verifyCode(@NonNull CodeVerifyRequest codeVerifyRequest) {
         return service.sendPost(VERIFY_CODE_URL, new ParametrizedRequest<>(codeVerifyRequest), VERIFY_CODE_RESPONSE.getType());
     }
 
-    // https://docs.simpay.pl/?php#pobieranie-listy-uslug
+    // https://docs.simpay.pl/#pobieranie-listy-uslug
     @SneakyThrows public ServicesRespond getServiceList(@NonNull ServiceListRequest serviceListRequest) {
         return service.sendPost(SERVICE_LIST_URL, new ParametrizedRequest<>(serviceListRequest), SERVICE_LIST_RESPONSE.getType());
     }

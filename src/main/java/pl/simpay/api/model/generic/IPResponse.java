@@ -1,11 +1,11 @@
-package pl.simpay.api.model.sms.respond;
+package pl.simpay.api.model.generic;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class IpRespond {
+public class IPResponse {
     private String status;
     private List<String> ips;
 }
