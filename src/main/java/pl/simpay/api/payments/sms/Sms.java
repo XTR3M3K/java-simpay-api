@@ -14,19 +14,18 @@ import pl.simpay.api.utils.HttpService;
 
 @AllArgsConstructor
 public class Sms {
+    private final HttpService service;
     private static final String VERIFY_CODE_URL = "https://simpay.pl/api/status";
     private static final String SERVICE_LIST_URL = "https://simpay.pl/api/get_services";
-    private static final TypeToken<APIResponse<CodeVerifyRespond>> SERVICE_LIST_RESPONSE = new TypeToken<>() {
-    };
-    private static final TypeToken<APIResponse<ServicesRespond>> VERIFY_CODE_RESPONSE = new TypeToken<>() {
-    };
+    private static final TypeToken<APIResponse<CodeVerifyRespond>> SERVICE_LIST_RESPONSE = new TypeToken<>() {};
+    private static final TypeToken<APIResponse<ServicesRespond>> VERIFY_CODE_RESPONSE = new TypeToken<>() {};
 
-    private final HttpService service;
-
+    // https://docs.simpay.pl/?php#weryfikacja-kodu
     @SneakyThrows public CodeVerifyRespond verifyCode(@NonNull CodeVerifyRequest codeVerifyRequest) {
         return service.sendPost(VERIFY_CODE_URL, new ParametrizedRequest<>(codeVerifyRequest), VERIFY_CODE_RESPONSE.getType());
     }
 
+    // https://docs.simpay.pl/?php#pobieranie-listy-uslug
     @SneakyThrows public ServicesRespond getServiceList(@NonNull ServiceListRequest serviceListRequest) {
         return service.sendPost(SERVICE_LIST_URL, new ParametrizedRequest<>(serviceListRequest), SERVICE_LIST_RESPONSE.getType());
     }

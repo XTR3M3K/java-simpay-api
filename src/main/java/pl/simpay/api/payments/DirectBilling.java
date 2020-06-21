@@ -105,6 +105,7 @@ public class DirectBilling {
         return service.sendPost(SERVICE_COMMISSION_URL, new ParametrizedRequest<>(request), DB_SERVICE_COMMISSION_RESPONSE.getType());
     }
 
+    // https://docs.simpay.pl/?php#lista-ip-serwerow-simpay
     private boolean checkIsIpValid(String ip) {
         IpRespond response = service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
         return response.getIps().contains(ip);
