@@ -1,6 +1,6 @@
 package pl.simpay.api.model;
 
-import lombok.Setter;
+import lombok.Getter;
 
 public enum Operator {
     ORANGE(1),
@@ -8,8 +8,8 @@ public enum Operator {
     T_MOBILE(3),
     PLUS_GSM(4);
 
-    @Setter
-    private int value;
+    @Getter
+    private final int value;
 
     Operator(int value) {
         this.value = value;
