@@ -3,7 +3,6 @@ package pl.simpay.api.payments;
 import lombok.Data;
 import pl.simpay.api.model.db.DbGenerateRequest;
 import pl.simpay.api.model.db.DbGenerateResponse;
-import pl.simpay.api.utils.ApiConstants;
 import pl.simpay.api.utils.Hashing;
 import pl.simpay.api.utils.HttpService;
 
