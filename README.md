@@ -1,18 +1,19 @@
 # java-simpay-api
 
-# Sms code verify
+## SMS
+### Weryfikacja kodu
 ```
 Sms sms = new Sms();
 Sms sms = new Sms("key","secret");
 
-CodeVerifyRequest codeVerifyRequest = new CodeVerifyRequest();
-codeVerifyRequest.setCode("code");
-codeVerifyRequest.setKey("key"); // can be omitted  by passing value in constructor
-codeVerifyRequest.setSecret("secret"); // can be omitted  by passing value in constructor
-codeVerifyRequest.setNumber("number");
-codeVerifyRequest.setService_id("service_id");
+CodeVerifyRequest request = new CodeVerifyRequest();
+request.setCode("code");
+request.setKey("key"); // can be omitted  by passing value in constructor
+request.setSecret("secret"); // can be omitted  by passing value in constructor
+request.setNumber("number");
+request.setService_id("service_id");
 
-APIResponse<CodeVerifyResponse> response = sms.verifyCode(codeVerifyRequest);
+APIResponse<CodeVerifyResponse> response = sms.verifyCode(request);
 List<String> error = response.getError(); // List of errors, if request was successful list will be empty
 CodeVerifyResponse codeVerifyResponse = response.getRespond();
 int from = codeVerifyResponse.getFrom(); // Sender number
@@ -22,23 +23,23 @@ int test = codeVerifyResponse.getTest(); // 1 if sms was test else 0
 double value = codeVerifyResponse.getValue(); // Code Value
 ```
 
-# Sms retrieve service list
+### Pobieranie listy usług
 ```
 Sms sms = new Sms();
 Sms sms = new Sms("key","secret");
 
 
-ServiceListRequest serviceListRequest = new ServiceListRequest();
-serviceListRequest.setKey("key");
-serviceListRequest.setSecret("secret");
-APIResponse<ServicesResponse> response = sms.getServiceList(serviceListRequest);
+ServiceListRequest request = new ServiceListRequest();
+request.setKey("key");
+request.setSecret("secret");
+APIResponse<ServicesResponse> response = sms.getServiceList(request);
 List<String> error = response.getError(); // List of errors, if request was successful list will be empty
 ServicesResponse serviceList = response.getRespond();
 String status = serviceList.getStatus(); // Status received from api
 List<Service> services = serviceList.getServices(); // List of services
 ```
 
-# Sms xml
+## SMS XML
 ```
 SmsXml smsXml = new SmsXml("apikey");
 String code = smsXml.generateCode(); // Generate code
@@ -47,47 +48,93 @@ String sms = smsXml.generateXml("sms"); // Generate xml from sms message
 boolean ip = smsXml.getServersIp("ip"); // Check if passed ip is valid ip of simpay servers
 ```
 
-# Direct billing - Generate Transaction
+## Direct Billing
+### Generowanie transakcji
 ```
 DirectBilling directBilling = new DirectBilling();
 DirectBilling directBilling = new DirectBilling("apiKey", "secret", false, 1);
 
-DbGenerateRequest dbGenerateRequest = new DbGenerateRequest();
-dbGenerateRequest.setAmount("amount");
-dbGenerateRequest.setAmount_gross("amount_gross");
-dbGenerateRequest.setAmount_required("amount_required");
-dbGenerateRequest.setComplete("complete");
-dbGenerateRequest.setFailure("failure");
-dbGenerateRequest.setProvider(Operator.ORANGE); // orange, play, t-mobile, plus-gsm
-dbGenerateRequest.setControl("control");
-dbGenerateRequest.setServiceId(1);
-dbGenerateRequest.setSign("sign");
+DbGenerateRequest request = new DbGenerateRequest();
+request.setAmount("amount");
+request.setAmount_gross("amount_gross");
+request.setAmount_required("amount_required");
+request.setComplete("complete");
+request.setFailure("failure");
+request.setProvider(Operator.ORANGE); // orange, play, t-mobile, plus-gsm
+request.setControl("control");
+request.setServiceId(1);
 
-DbGenerateResponse dbGenerateResponse = directBilling.generateTransaction(dbGenerateRequest);
+DbGenerateResponse dbGenerateResponse = directBilling.generateTransaction(request);
 dbGenerateResponse.getLink(); // Link
 dbGenerateResponse.getName(); // Transaction Name
 dbGenerateResponse.getStatus(); // Status received from api
 ```
 
-# Direct billing - get transaction by id
+### Pobieranie danych o transakcji
 ```
 DirectBilling directBilling = new DirectBilling();
 DirectBilling directBilling = new DirectBilling("apiKey", "secret", false, 1);
 
-DbTransactionRequest dbTransactionRequest = new DbTransactionRequest();
-dbTransactionRequest.setId(1);
-dbTransactionRequest.setKey("key"); // can be omitted  by passing value in constructor
-dbTransactionRequest.setSecret("secret");  // can be omitted  by passing value in constructor
+DbTransactionRequest request = new DbTransactionRequest();
+request.setId(1);
+request.setKey("key"); // can be omitted  by passing value in constructor
+request.setSecret("secret");  // can be omitted  by passing value in constructor
 
-APIResponse<DbTransaction> response = directBilling.getTransaction(dbTransactionRequest);
+APIResponse<DbTransaction> response = directBilling.getTransaction(request);
 List<String> error = response.getError(); // List of errors, if request was successful list will be empty
 DbTransaction respond = response.getRespond();
-respond.getId();
-respond.getControl();
-respond.getNumber_from();
-respond.getStatus();
-respond.getValuenet();
-respond.getValuenet_gross();
-respond.getValuenet_partner();
-respond.getSign();
+```
+
+### Pobieranie listy usług DCB
+```
+DirectBilling directBilling = new DirectBilling();
+DirectBilling directBilling = new DirectBilling("apiKey", "secret", false, 1);
+
+DbServicesListRequest request = new DbServicesListRequest();
+request.setApi("key"); // can be omitted  by passing value in constructor
+request.setSecret("secret");  // can be omitted  by passing value in constructor
+
+APIResponse<DbServicesListResponse> response = directBilling.getServices(request);
+List<String> error = response.getError(); // List of errors, if request was successful list will be empty
+DbTransaction respond = response.getRespond();
+```
+
+### Pobieranie maksymalnych kwot transakcji
+```
+DirectBilling directBilling = new DirectBilling();
+DirectBilling directBilling = new DirectBilling("apiKey", "secret", false, 1);
+
+DbTransactionLimitsRequest request = new DbTransactionLimitsRequest();
+request.setService_id(1);
+request.setApi("key"); // can be omitted  by passing value in constructor
+request.setSecret("secret");  // can be omitted  by passing value in constructor
+
+APIResponse<List<DbTransactionLimit>> response = directBilling.getTransactionLimits(request);
+```
+
+### Pobieranie prowizji dla usługi
+```
+DirectBilling directBilling = new DirectBilling();
+DirectBilling directBilling = new DirectBilling("apiKey", "secret", false, 1);
+
+DbServiceCommissionRequest request = new DbServiceCommissionRequest();
+request.setService_id(1);
+request.setApi("key"); // can be omitted  by passing value in constructor
+request.setSecret("secret");  // can be omitted  by passing value in constructor
+
+List<DbCommission> response = directBilling.getServiceCommission(request);
+```
+
+### Pobieranie adresów IP serwerów SimPay
+```
+DirectBilling directBilling = new DirectBilling();
+
+List<String> response = directBilling.getServersIp();
+```
+
+### Obliczanie podpisu sign
+```
+DirectBilling directBilling = new DirectBilling();
+
+String sign = directBilling.sign(int id, String status, String valuenet, String valuepartner, String control);
 ```
