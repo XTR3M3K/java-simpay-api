@@ -37,7 +37,7 @@ public class Sms {
     }
 
     // https://docs.simpay.pl/#weryfikacja-kodu
-    @SneakyThrows public CodeVerifyResponse verifyCode(@NonNull CodeVerifyRequest request) {
+    @SneakyThrows public APIResponse<CodeVerifyResponse> verifyCode(@NonNull CodeVerifyRequest request) {
         if (request.getKey() == null) request.setKey(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
 
@@ -45,7 +45,7 @@ public class Sms {
     }
 
     // https://docs.simpay.pl/#pobieranie-listy-uslug
-    @SneakyThrows public ServicesResponse getServiceList(@NonNull ServiceListRequest request) {
+    @SneakyThrows public APIResponse<ServicesResponse> getServiceList(@NonNull ServiceListRequest request) {
         if (request.getKey() == null) request.setKey(apiKey);
         if (request.getSecret() == null) request.setSecret(secret);
 

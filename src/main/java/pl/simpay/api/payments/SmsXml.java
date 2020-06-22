@@ -19,9 +19,9 @@ public class SmsXml {
     private static final HttpService service = new HttpService();
     private static final String GET_IP_URL = "https://simpay.pl/api/get_ip";
     private static final String charset = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789";
-    private static final String[] params = new String[] { "send_number", "sms_text", "sms_from", "sms_id", "sign" };
+    private static final String[] params = new String[]{"send_number", "sms_text", "sms_from", "sms_id", "sign"};
     private static final Map<String, Double> codes = new HashMap<>();
-    
+
     static {
         codes.put("7055", 0.25);
         codes.put("7136", 0.5);
@@ -84,6 +84,7 @@ public class SmsXml {
 
     // https://docs.simpay.pl/#lista-ip-serwerow-simpay
     public boolean getServersIp(String ip) {
-        return service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
+        IPResponse ipResponse = service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
+        return ipResponse.getIps().contains(ip);
     }
 }

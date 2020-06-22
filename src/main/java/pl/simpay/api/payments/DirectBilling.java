@@ -107,7 +107,8 @@ public class DirectBilling {
 
     // https://docs.simpay.pl/#lista-ip-serwerow-simpay
     public boolean getServersIp(String ip) {
-        return service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
+        IPResponse ipResponse = service.sendGet(GET_IP_URL, IP_RESPONSE.getType());
+        return ipResponse.getIps().contains(ip);
     }
 
     // https://docs.simpay.pl/#odbieranie-transakcji
