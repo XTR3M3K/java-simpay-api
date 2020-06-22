@@ -1,6 +1,6 @@
 # java-simpay-api
 
-#Sms code verify
+# Sms code verify
 ```
 Sms sms = new Sms();
 Sms sms = new Sms("key","secret");
@@ -22,7 +22,7 @@ int test = codeVerifyResponse.getTest(); // 1 if sms was test else 0
 double value = codeVerifyResponse.getValue(); // Code Value
 ```
 
-#Sms retrieve service list
+# Sms retrieve service list
 ```
 Sms sms = new Sms();
 Sms sms = new Sms("key","secret");
@@ -38,7 +38,7 @@ String status = serviceList.getStatus(); // Status received from api
 List<Service> services = serviceList.getServices(); // List of services
 ```
 
-#Sms xml
+# Sms xml
 ```
 SmsXml smsXml = new SmsXml("apikey");
 String code = smsXml.generateCode(); // Generate code
@@ -47,7 +47,7 @@ String sms = smsXml.generateXml("sms"); // Generate xml from sms message
 boolean ip = smsXml.getServersIp("ip"); // Check if passed ip is valid ip of simpay servers
 ```
 
-#Direct billing - Generate Transaction
+# Direct billing - Generate Transaction
 ```
 DirectBilling directBilling = new DirectBilling();
 DirectBilling directBilling = new DirectBilling("apiKey", "secret", false, 1);
@@ -69,7 +69,7 @@ dbGenerateResponse.getName(); // Transaction Name
 dbGenerateResponse.getStatus(); // Status received from api
 ```
 
-#Direct billing - get transaction by id
+# Direct billing - get transaction by id
 ```
 DirectBilling directBilling = new DirectBilling();
 DirectBilling directBilling = new DirectBilling("apiKey", "secret", false, 1);
