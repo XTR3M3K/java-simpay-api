@@ -5,15 +5,15 @@ import pl.simpay.api.model.db.requests.DbTransactionLimitsRequest;
 import pl.simpay.api.payments.DirectBilling;
 
 public class DirectBillingTest {
-    private static final String API_KEY = "XXXXXXX";
-    private static final String API_SECRET = "XXXXXXXXX";
-    private static final String SERVICE_ID = "XXXXXXX";
+    private static final String API_KEY = "XXXXXXXXXXXXXX";
+    private static final String API_SECRET = "XXXXXXXXXXXXXX";
+    private static final String SERVICE_ID = "XXXXXXXXXXXXXX";
 
     public static void main(String[] args) {
-        getServersIp();
-        getTransactionLimits();
-        getServices();
-        getServiceCommission();
+        // getServersIp();
+        // getTransactionLimits();
+        // getServices();
+        // getServiceCommission();
         generateTransaction();
     }
 
